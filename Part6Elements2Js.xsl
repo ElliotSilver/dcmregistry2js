@@ -7,6 +7,7 @@
         <xsl:apply-templates select="db:book/db:chapter[@xml:id='chapter_6']/db:table[@xml:id='table_6-1']/db:tbody"/>
         <xsl:apply-templates select="db:book/db:chapter[@xml:id='chapter_7']/db:table[@xml:id='table_7-1']/db:tbody"/>
         <xsl:apply-templates select="db:book/db:chapter[@xml:id='chapter_8']/db:table[@xml:id='table_8-1']/db:tbody"/>
+        <xsl:apply-templates select="db:book/db:chapter[@xml:id='chapter_9']/db:table[@xml:id='table_9-1']/db:tbody"/>
         <xsl:text>}
 </xsl:text>
     </xsl:template>
