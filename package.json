@@ -1,0 +1,35 @@
+{
+  "name": "dcmregistry2js",
+  "version": "1.0.1",
+  "description": "Convert DICOM standard tag and UID registries to JSON format",
+  "main": "dist/app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "npx": "^10.2.2",
+    "saxon-js": "^2.0.3",
+    "xslt3": "^2.0.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElliotSilver/dcmregistry2js.git"
+  },
+  "keywords": [
+    "DICOM",
+    "XSLT",
+    "JSON",
+    "JavaScript"
+  ],
+  "author": "Elliot Silver <elliot@argentixinfo.com> (https://www.argentixinfo.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ElliotSilver/dcmregistry2js/issues"
+  },
+  "homepage": "https://github.com/ElliotSilver/dcmregistry2js#readme",
+  "files" : [
+    "dist/"
+  ],
+  "type" : "module"
+}
