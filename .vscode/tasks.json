@@ -1,93 +1,107 @@
 {
 	"version": "2.0.0",
 	"tasks": [
+		// {
+		// 	"type": "xslt-js",
+		// 	"label": "xslt-js: Extract Tags (json)",
+		// 	"nodeModulesFolder": "${workspaceFolder}/node_modules",
+		// 	"xsltFile": "${workspaceFolder}/src/extractTags.xsl",
+		// 	"xmlSource": "${workspaceFolder}/input/part06.xml",
+		// 	"resultPath": "${workspaceFolder}/dist/tagRegistry.json",
+		// 	"parameters": [
+		// 		{
+		// 			"name": "format",
+		// 			"value": "json"
+		// 		},
+		// 		{
+		// 			"name": "+part07",
+		// 			"value": "${workspaceFolder}/input/part07.xml"
+		// 		}
+		// 	],
+		// 	"group": {
+		// 		"kind": "build"
+		// 	},
+		// 	"problemMatcher": [
+		// 		"$saxon-xslt-js"
+		// 	]
+		// },
+		// {
+		// 	"type": "xslt-js",
+		// 	"label": "xslt-js: Extract Tags (xml)",
+		// 	"nodeModulesFolder": "${workspaceFolder}/node_modules",
+		// 	"xsltFile": "${workspaceFolder}/src/extractTags.xsl",
+		// 	"xmlSource": "${workspaceFolder}/input/part06.xml",
+		// 	"resultPath": "${workspaceFolder}/tagRegistry.xml",
+		// 	"parameters": [
+		// 		{
+		// 			"name": "format",
+		// 			"value": "xml"
+		// 		},
+		// 		{
+		// 			"name": "+part07",
+		// 			"value": "${workspaceFolder}/input/part07.xml"
+		// 		}
+		// 	],
+		// 	"group": {
+		// 		"kind": "build"
+		// 	},
+		// 	"problemMatcher": [
+		// 		"$saxon-xslt-js"
+		// 	]
+		// },
+		// {
+		// 	"type": "xslt-js",
+		// 	"label": "xslt-js: Extract UIDs (json)",
+		// 	"nodeModulesFolder": "${workspaceFolder}/node_modules",
+		// 	"xsltFile": "${workspaceFolder}/src/extractUids.xsl",
+		// 	"xmlSource": "${workspaceFolder}/input/part06.xml",
+		// 	"resultPath": "${workspaceFolder}/dist/uidRegistry.json",
+		// 	"parameters": [
+		// 		{
+		// 			"name": "format",
+		// 			"value": "json"
+		// 		}
+		// 	],
+		// 	"group": {
+		// 		"kind": "build"
+		// 	},
+		// 	"problemMatcher": [
+		// 		"$saxon-xslt-js"
+		// 	]
+		// },
+		// {
+		// 	"type": "xslt-js",
+		// 	"label": "xslt-js: Extract UIDs (xml)",
+		// 	"nodeModulesFolder": "${workspaceFolder}/node_modules",
+		// 	"xsltFile": "${workspaceFolder}/src/extractUids.xsl",
+		// 	"xmlSource": "${workspaceFolder}/input/part06.xml",
+		// 	"resultPath": "${workspaceFolder}/uidRegistry.xml",
+		// 	"parameters": [
+		// 		{
+		// 			"name": "format",
+		// 			"value": "xml"
+		// 		}
+		// 	],
+		// 	"group": {
+		// 		"kind": "build"
+		// 	},
+		// 	"problemMatcher": [
+		// 		"$saxon-xslt-js"
+		// 	]
+		// },
 		{
-			"type": "xslt-js",
-			"label": "xslt-js: Extract Tags (json)",
-			"nodeModulesFolder": "${workspaceFolder}/node_modules",
-			"xsltFile": "${workspaceFolder}/src/extractTags.xsl",
-			"xmlSource": "${workspaceFolder}/input/part06.xml",
-			"resultPath": "${workspaceFolder}/dist/tagRegistry.json",
-			"parameters": [
-				{
-					"name": "format",
-					"value": "json"
-				},
-				{
-					"name": "+part07",
-					"value": "${workspaceFolder}/input/part07.xml"
-				}
-			],
-			"group": {
-				"kind": "build"
-			},
-			"problemMatcher": [
-				"$saxon-xslt-js"
-			]
-		},
-		{
-			"type": "xslt-js",
-			"label": "xslt-js: Extract Tags (xml)",
-			"nodeModulesFolder": "${workspaceFolder}/node_modules",
-			"xsltFile": "${workspaceFolder}/src/extractTags.xsl",
-			"xmlSource": "${workspaceFolder}/input/part06.xml",
-			"resultPath": "${workspaceFolder}/tagRegistry.xml",
-			"parameters": [
-				{
-					"name": "format",
-					"value": "xml"
-				},
-				{
-					"name": "+part07",
-					"value": "${workspaceFolder}/input/part07.xml"
-				}
-			],
-			"group": {
-				"kind": "build"
-			},
-			"problemMatcher": [
-				"$saxon-xslt-js"
-			]
-		},
-		{
-			"type": "xslt-js",
-			"label": "xslt-js: Extract UIDs (json)",
-			"nodeModulesFolder": "${workspaceFolder}/node_modules",
-			"xsltFile": "${workspaceFolder}/src/extractUids.xsl",
-			"xmlSource": "${workspaceFolder}/input/part06.xml",
-			"resultPath": "${workspaceFolder}/dist/uidRegistry.json",
-			"parameters": [
-				{
-					"name": "format",
-					"value": "json"
-				}
-			],
-			"group": {
-				"kind": "build"
-			},
-			"problemMatcher": [
-				"$saxon-xslt-js"
-			]
-		},
-		{
-			"type": "xslt-js",
-			"label": "xslt-js: Extract UIDs (xml)",
-			"nodeModulesFolder": "${workspaceFolder}/node_modules",
-			"xsltFile": "${workspaceFolder}/src/extractUids.xsl",
-			"xmlSource": "${workspaceFolder}/input/part06.xml",
-			"resultPath": "${workspaceFolder}/uidRegistry.xml",
-			"parameters": [
-				{
-					"name": "format",
-					"value": "xml"
-				}
-			],
-			"group": {
-				"kind": "build"
-			},
-			"problemMatcher": [
-				"$saxon-xslt-js"
-			]
+			"type": "npm",
+			"script": "install",
+			"problemMatcher": [],
+			"label": "npm: install",
+			"detail": "install dependencies from package"
 		}
+		// ,
+		// {
+		// 	"type": "jake",
+		// 	"task": "fetch-all",
+		// 	"problemMatcher": [],
+		// 	"label": "jake: fetch-all"
+		// }
 	]
 }

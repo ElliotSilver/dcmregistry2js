@@ -1,48 +1,63 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve, join } from 'path';
 
-let registries = new Map();
-let active = 'current';
+let releases = new Map();
+let activeName = 'current';
 
-function loadReleaseList() {
-    if (registries.size > 0) {
+function loadReleaseNames() {
+    if (releases.size > 0) {
         return;
     }
 
-    let dataDir = resolve('./data');
-    readdirSync(dataDir, { withFileTypes: true })
+    readdirSync(resolve('./data'), { withFileTypes: true })
         .filter(ent => ent.isDirectory())
-        .forEach(ent => registries.set(ent.name, null));
+        .forEach(ent => releases.set(ent.name, null));
 }
 
-function loadRegistry(releaseName) {
-    loadReleaseList();
+function loadRegistryForReleaseName(releaseName) {
+    loadReleaseNames();
 
-    if (!registries.has(releaseName)) {
-        var s = `DICOM release name {$releaseName} not recognized.`
-         throw new Error(s);
+    if (!releases.has(releaseName)) {
+        throw new Error('DICOM release name not recognized.');
     }
 
-    let jsondata = readFileSync(resolve(join('./data', releaseName, 'tagRegistry.json'));
+    let jsondata = readFileSync(resolve(join('./data', releaseName, 'tagRegistry.json')));
     let data = JSON.parse(jsondata);
     let registry = new Map(data.tags.map(each => [each.tag, each]));
-    registry['releaseName'] = data.metadata.release;
-    registries.set(releaseName, registry);
+//    registry['releaseName'] = data.metadata.release
+    releases.set(releaseName, registry);
     return registry;
 }
-export function registryForRelease(releaseName) {
-    return registries.get(releaseName) || loadRegistry(releaseName);
+
+export function unloadRegistryForReleaseName(releaseName) {
+    if (!releases.has(releaseName)) {
+        throw new Error('DICOM release name not recognized');
+    }
+
+    releases.set(releaseName, null);
+}
+
+export function releaseNames() {
+    loadReleaseNames();
+
+    return releases.keys();
+}
+
+export function registryForReleaseName(releaseName) {
+    return releases.get(releaseName) || loadRegistryForReleaseName(releaseName);
 }
 
 export function activeRegistry() {
-    return registryForRelease(active);
+    return registryForReleaseName(activeReleaseName());
 }
 
-export function setActiveRelease(releaseName) {
-    loadRegistry(releaseName);
-    active = releaseName;
+export function activateReleaseName(releaseName) {
+    loadRegistryForReleaseName(releaseName)
+    var oldName = activeName;
+    activeName = releaseName;
+    return oldName;
 }
 
-export function getActiveRelease() {
-    return active;
+export function activeReleaseName() {
+    return activeName;
 }

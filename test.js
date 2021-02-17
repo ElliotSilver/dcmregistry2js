@@ -1,48 +1,54 @@
-import { activeRegistry, getActiveRelease, registryForRelease, setActiveRelease } from './index.js'
+import { 
+    unloadRegistryForReleaseName, 
+    releaseNames,
+    registryForReleaseName,
+    activeRegistry,
+    activateReleaseName,
+    activeReleaseName
+} from './index.js';
 
 
 console.log('starting');
 
-let x = getActiveRelease()
-console.log("getActiveRelease(): %s", x)
+let x = activeReleaseName()
+console.log("activeReleaseName(): %s", x)
 
-x = registryForRelease('2018a')
+x = registryForReleaseName('2018a')
 console.log("registryForRelease('2018a'): %s", x)
 
-x = registryForRelease('current')
+x = registryForReleaseName('current')
 console.log("registryForRelease('current'): %s", x)
 
-x = registryForRelease('cur' + 'rent')
+x = registryForReleaseName('cur' + 'rent')
 console.log("registryForRelease('cur' + 'rent'): %s", x)
 
 x = activeRegistry()
 console.log("activeRegistry(): %s", x)
 
-x = getActiveRelease()
-console.log("getActiveRelease(): %s", x)
+x = activeReleaseName()
+console.log("activeReleaseName(): %s", x)
 
-setActiveRelease('2017c')
-console.log("setActiveRelease('2017c')")
+activateReleaseName('2017c')
+console.log("activateReleaseName('2017c')")
 
 x = activeRegistry()
 console.log("activeRegistry(): %s", x)
-console.log("releaseName: %s", x['releaseName'])
 
 try {
-    setActiveRelease('foo')
+    activateReleaseName('foo')
 } catch (e) {
     console.log(e)
 }
 
 try {
-    x = registryForRelease('2019b')
+    x = registryForReleaseName('2019b')
     console.log("2019b registry: %s", x)
 } catch (e) {
     console.log(e)
 }
 
 try {
-    x = registryForRelease('bar')
+    x = registryForReleaseName('bar')
     console.log("bar registry: %s", x);
 } catch (e) {
     console.log(e);
