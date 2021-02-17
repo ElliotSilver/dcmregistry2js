@@ -1,8 +1,8 @@
 {
   "name": "dcmregistry2js",
-  "version": "1.0.1",
+  "version": "0.1.0",
   "description": "Convert DICOM standard tag and UID registries to JSON format",
-  "main": "dist/app.js",
+  "main": "./index.js",
   "dependencies": {},
   "devDependencies": {
     "npx": "^10.2.2",
@@ -28,8 +28,8 @@
     "url": "https://github.com/ElliotSilver/dcmregistry2js/issues"
   },
   "homepage": "https://github.com/ElliotSilver/dcmregistry2js#readme",
-  "files" : [
-    "dist/"
+  "files": [
+    "data/"
   ],
-  "type" : "module"
+  "type": "module"
 }

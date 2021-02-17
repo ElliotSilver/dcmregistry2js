@@ -1,0 +1,35 @@
+// let const Jake = require('jake');
+
+// desc('This is the default task.');
+// task('default', function () {
+//   console.log('This is the default task.');
+//   console.log('Jake will run this task if you run `jake` with no task specified.');
+// });
+
+desc('This is some other task. It depends on the default task');
+task('fetch-all', function () {
+    let t = jake.Task['fetch-part'];
+    for (const release of ['current']) {
+        for (const part of ['part06']) {
+            t.invoke(release, part, './input');
+        }
+    }
+});
+
+desc('download specified DICOM part as XML');
+task('fetch-part', function (release, part, dir) {
+    // directory(dir);
+    // directory(`${dir}/${release}`);
+    jake.dir()
+    console.log(`fetching ${release}/${part} to ${dir}/${release}`)
+    console.log('current directory is: %s', process.cwd())
+    let cmd = `npx wget -O${release}/${part}.xml http://dicom.nema.org/medical/dicom/${release}/source/docbook/${part}/${part}.xml`
+    
+    var ex = jake.createExec([cmd]);
+    ex.addListener('error', function(msg, code) {
+        fail('Fatal error: ' + msg, code);
+    });
+    ex.run
+            exec(cmd, { printStdout: true, printStderr: true });
+});
+

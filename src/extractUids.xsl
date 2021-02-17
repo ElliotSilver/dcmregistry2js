@@ -57,6 +57,7 @@
                         <xsl:when test="contains($uidtype, 'Well-known SOP Instance')">sopInstance</xsl:when>
                         <xsl:when test="contains($uidtype, 'Well-known frame of reference')">frameOfReference</xsl:when>
                         <xsl:when test="contains($uidtype, 'SOP Class')">sopClass</xsl:when>
+                        <xsl:when test="contains($uidtype, 'Meta SOP Class')">metaSopClass</xsl:when>
                         <xsl:when test="contains($uidtype, 'DICOM UIDs as a Coding Scheme')">dicomScheme</xsl:when>
                         <xsl:when test="contains($uidtype, 'Coding Scheme')">codingScheme</xsl:when>
                         <xsl:when test="contains($uidtype, 'Application Context Name')">appContext</xsl:when>
@@ -68,7 +69,7 @@
                         <xsl:when test="contains($uidtype, 'LDAP OID')">ldap</xsl:when>
                         <xsl:when test="contains($uidtype, 'Synchronization Frame of Reference')">syncFrameOfReference</xsl:when>
                         <xsl:otherwise>
-                            <xsl:message terminate="yes">Unknown UID type: <xsl:value-of select="$uidtype"/>.</xsl:message>
+                            <xsl:message terminate="yes">Unknown UID type: '<xsl:value-of select="$uidtype"/>'.</xsl:message>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
