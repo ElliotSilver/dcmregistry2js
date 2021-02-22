@@ -1,63 +1,122 @@
 import { readdirSync, readFileSync } from 'fs';
 import { resolve, join } from 'path';
 
-let releases = new Map();
-let activeName = 'current';
+let tagReleases = new Map();
+let uidReleases = new Map();
+let tagActiveName = 'current';
+let uidActiveName = 'current';
 
-function loadReleaseNames() {
-    if (releases.size > 0) {
+function loadTagReleaseNames() {
+    if (tagReleases.size > 0) {
         return;
     }
 
     readdirSync(resolve('./data'), { withFileTypes: true })
         .filter(ent => ent.isDirectory())
-        .forEach(ent => releases.set(ent.name, null));
+        .forEach(ent => {
+            tagReleases.set(ent.name, null)
+        });
 }
 
-function loadRegistryForReleaseName(releaseName) {
-    loadReleaseNames();
+function loadUidReleaseNames() {
+    if (uidReleases.size > 0) {
+        return;
+    }
 
-    if (!releases.has(releaseName)) {
-        throw new Error('DICOM release name not recognized.');
+    readdirSync(resolve('./data'), { withFileTypes: true })
+        .filter(ent => ent.isDirectory())
+        .forEach(ent => {
+            uidReleases.set(ent.name, null)
+        });
+}
+function loadTagRegistryForReleaseName(releaseName) {
+    loadTagReleaseNames();
+
+    if (!tagReleases.has(releaseName)) {
+        throw new Error('DICOM release name "' + releaseName + '" not recognized.');
     }
 
     let jsondata = readFileSync(resolve(join('./data', releaseName, 'tagRegistry.json')));
     let data = JSON.parse(jsondata);
     let registry = new Map(data.tags.map(each => [each.tag, each]));
-//    registry['releaseName'] = data.metadata.release
-    releases.set(releaseName, registry);
+    tagReleases.set(releaseName, registry);
+
+    // For most releases, directory name matches release name in metainfo.
+    // However, the current release uses the "current" directory.
+    // List the registry under both names.
+    if(releaseName != data.metadata.release) {
+        tagReleases.set(data.metadata.release, registry);
+    }
     return registry;
 }
 
-export function unloadRegistryForReleaseName(releaseName) {
-    if (!releases.has(releaseName)) {
-        throw new Error('DICOM release name not recognized');
+function loadUidRegistryForReleaseName(releaseName) {
+    loadUidReleaseNames();
+
+    if (!uidReleases.has(releaseName)) {
+        throw new Error('DICOM release name "' + releaseName + '" not recognized.');
     }
 
-    releases.set(releaseName, null);
+    let jsondata = readFileSync(resolve(join('./data', releaseName, 'uidRegistry.json')));
+    let data = JSON.parse(jsondata);
+    let registry = new Map(data.uids.map(each => [each.value, each]));
+    uidReleases.set(releaseName, registry);
+
+    // For most releases, directory name matches release name in metainfo.
+    // However, the current release uses the "current" directory.
+    // List the registry under both names.
+    if(releaseName != data.metadata.release) {
+        uidReleases.set(data.metadata.release, registry);
+    }
+    return registry;
 }
 
-export function releaseNames() {
-    loadReleaseNames();
+export function tagReleaseNames() {
+    loadTagReleaseNames();
 
-    return releases.keys();
+    return tagReleases.keys();
 }
 
-export function registryForReleaseName(releaseName) {
-    return releases.get(releaseName) || loadRegistryForReleaseName(releaseName);
+export function uidReleaseNames() {
+    loadUidReleaseNames();
+
+    return uidReleases.keys();
 }
 
-export function activeRegistry() {
-    return registryForReleaseName(activeReleaseName());
+export function tagRegistryForReleaseName(releaseName) {
+    return tagReleases.get(releaseName) || loadTagRegistryForReleaseName(releaseName);
 }
 
-export function activateReleaseName(releaseName) {
-    loadRegistryForReleaseName(releaseName)
-    var oldName = activeName;
-    activeName = releaseName;
+export function uidRegistryForReleaseName(releaseName) {
+    return uidReleases.get(releaseName) || loadUidRegistryForReleaseName(releaseName);
+}
+
+export function activeTagRegistry() {
+    return tagRegistryForReleaseName(activeTagReleaseName());
+}
+
+export function activeUidRegistry() {
+    return uidRegistryForReleaseName(activeUidReleaseName());
+}
+
+export function activateTagReleaseName(releaseName) {
+    loadTagRegistryForReleaseName(releaseName)
+    var oldName = tagActiveName;
+    tagActiveName = releaseName;
     return oldName;
 }
 
-export function activeReleaseName() {
-    return activeName;
+export function activateUidReleaseName(releaseName) {
+    loadUidRegistryForReleaseName(releaseName)
+    var oldName = uidActiveName;
+    uidActiveName = releaseName;
+    return oldName;
+}
+
+export function activeTagReleaseName() {
+    return tagActiveName;
+}
+
+export function activeUidReleaseName() {
+    return uidActiveName;
 }

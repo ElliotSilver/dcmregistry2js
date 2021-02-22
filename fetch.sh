@@ -11,11 +11,11 @@ do
 		wget -P./input/$release -N http://dicom.nema.org/medical/dicom/$release/source/docbook/$part/$part.xml
 	done
 
-#	echo Generating UID registry
-#	npx xslt3 -xsl:./output/extractUids.sef.json -s:./input/$release/part06.xml -o:./output/$release/uidRegistry.json
+	echo Generating UID registry from ./input/$release/part06.xml to ./output/$release/uidRegistry.json
+	npx xslt3 -t -xsl:./output/extractUids.sef.json -s:./input/$release/part06.xml -o:./output/$release/uidRegistry.json
 	
-	echo Generating Tag registry
-	npx xslt3 -xsl:./output/extractTags.sef.json -s:./input/$release/part06.xml -o:./output/$release/tagRegistry.json +part07=./input/$release/part07.xml
+	echo Generating Tag registry from ./input/$release/part06.xml to ./output/$release/tagRegistry.json
+	npx xslt3 -t -xsl:./output/extractTags.sef.json -s:./input/$release/part06.xml -o:./output/$release/tagRegistry.json +part07=./input/$release/part07.xml
 
 done
 

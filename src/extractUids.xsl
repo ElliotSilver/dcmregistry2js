@@ -45,13 +45,20 @@
     
     <!-- Extract UID data from tables -->
     <xsl:template match="db:tbody" mode="extract-uids">
-        <xsl:for-each select="db:tr" >
+        <xsl:for-each select="db:tr">
             <uid xsl:exclude-result-prefixes="#all">
                 <xsl:attribute name="value"><xsl:value-of select="normalize-space(./db:td[1])"/></xsl:attribute>
                 <xsl:attribute name="name"><xsl:value-of select="normalize-space(./db:td[2])"/></xsl:attribute>
-                <xsl:attribute name="keyword"><xsl:value-of select="normalize-space(./db:td[3])"/></xsl:attribute>
+                <xsl:if test="exists(./db:td[5])">
+                    <xsl:attribute name="keyword"><xsl:value-of select="normalize-space(./db:td[3])"/></xsl:attribute>
+                </xsl:if>
                 <xsl:attribute name="type">
-                    <xsl:variable name="uidtype"><xsl:value-of select="normalize-space(./db:td[4])"/></xsl:variable>
+                    <xsl:variable name="uidtype">
+                        <xsl:choose>
+                            <xsl:when test="exists(./db:td[5])"><xsl:value-of select="./db:td[4]"/></xsl:when>
+                            <xsl:otherwise><xsl:value-of select="./db:td[3]"/></xsl:otherwise>
+                        </xsl:choose>  
+                    </xsl:variable>
                     <xsl:choose>
                         <xsl:when test="contains($uidtype, 'Transfer Syntax')">transferSyntax</xsl:when>
                         <xsl:when test="contains($uidtype, 'Well-known SOP Instance')">sopInstance</xsl:when>
@@ -68,12 +75,24 @@
                         <xsl:when test="contains($uidtype, 'Mapping Resource')">mappingResource</xsl:when>
                         <xsl:when test="contains($uidtype, 'LDAP OID')">ldap</xsl:when>
                         <xsl:when test="contains($uidtype, 'Synchronization Frame of Reference')">syncFrameOfReference</xsl:when>
+                        <!-- 2014a contain what appears to be an error listing "Transfer" instead of SOP class for Color Palette Storage -->
+                        <xsl:when test="contains($uidtype, 'Transfer')">sopClass</xsl:when>                        
+                        <!-- Older releases separate Q/R SOP classes from storage SOP classes; newer releases only use "SOP Class" -->
+                        <xsl:when test="contains($uidtype, 'Query/Retrieve')">sopClass</xsl:when>
                         <xsl:otherwise>
                             <xsl:message terminate="yes">Unknown UID type: '<xsl:value-of select="$uidtype"/>'.</xsl:message>
                         </xsl:otherwise>
                     </xsl:choose>
                 </xsl:attribute>
                 <xsl:attribute name="retired"><xsl:value-of select="exists(./db:td[1]/descendant::db:emphasis)"/></xsl:attribute>
+                <xsl:variable name="lastCol">
+                    <xsl:choose>
+                        <xsl:when test="exists(./db:td[5])"><xsl:copy-of select="./db:td[5]"/></xsl:when>
+                        <xsl:otherwise><xsl:copy-of select="./db:td[4]"/></xsl:otherwise>
+                    </xsl:choose>  
+                </xsl:variable>
+                <xsl:attribute name="dicos"><xsl:value-of select="contains($lastCol,'DICOS')"/></xsl:attribute>
+                <xsl:attribute name="diconde"><xsl:value-of select="contains($lastCol,'DICONDE')"/></xsl:attribute>
             </uid>
         </xsl:for-each>
     </xsl:template>
@@ -110,12 +129,18 @@
             <xsl:value-of select="./@value"/>
             <xsl:text>", "name" : "</xsl:text>
             <xsl:value-of select="./@name"/>
-            <xsl:text>", "keyword" : "</xsl:text>
-            <xsl:value-of select="./@keyword"/>
+            <xsl:if test="exists('./@keyword')">
+                <xsl:text>", "keyword" : "</xsl:text>
+                <xsl:value-of select="./@keyword"/>
+            </xsl:if>
             <xsl:text>", "type" : "</xsl:text>
             <xsl:value-of select="./@type"/>
             <xsl:text>", "retired" : </xsl:text>
             <xsl:value-of select="./@retired"/>
+            <xsl:text>, "dicos" : </xsl:text>
+            <xsl:value-of select="./@dicos"/>
+            <xsl:text>, "diconde" : </xsl:text>
+            <xsl:value-of select="./@diconde "/>
             <xsl:text> }</xsl:text>
             <xsl:if test="following-sibling::*">
                 <xsl:text>,</xsl:text>

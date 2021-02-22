@@ -1,54 +1,52 @@
 import { 
-    unloadRegistryForReleaseName, 
-    releaseNames,
-    registryForReleaseName,
-    activeRegistry,
-    activateReleaseName,
-    activeReleaseName
+    tagRegistryForReleaseName,
+    activeTagRegistry,
+    activateTagReleaseName,
+    activeTagReleaseName
 } from './index.js';
 
 
 console.log('starting');
 
-let x = activeReleaseName()
+let x = activeTagReleaseName()
 console.log("activeReleaseName(): %s", x)
 
-x = registryForReleaseName('2018a')
+x = tagRegistryForReleaseName('2018a')
 console.log("registryForRelease('2018a'): %s", x)
 
-x = registryForReleaseName('current')
+x = tagRegistryForReleaseName('current')
 console.log("registryForRelease('current'): %s", x)
 
-x = registryForReleaseName('cur' + 'rent')
+x = tagRegistryForReleaseName('cur' + 'rent')
 console.log("registryForRelease('cur' + 'rent'): %s", x)
 
-x = activeRegistry()
+x = activeTagRegistry()
 console.log("activeRegistry(): %s", x)
 
-x = activeReleaseName()
+x = activeTagReleaseName()
 console.log("activeReleaseName(): %s", x)
 
-activateReleaseName('2017c')
-console.log("activateReleaseName('2017c')")
+activateTagReleaseName('2017c')
+console.log("tagActivateReleaseName('2017c')")
 
-x = activeRegistry()
+x = activeTagRegistry()
 console.log("activeRegistry(): %s", x)
 
 try {
-    activateReleaseName('foo')
+    activateTagReleaseName('foo')
 } catch (e) {
     console.log(e)
 }
 
 try {
-    x = registryForReleaseName('2019b')
+    x = tagRegistryForReleaseName('2019b')
     console.log("2019b registry: %s", x)
 } catch (e) {
     console.log(e)
 }
 
 try {
-    x = registryForReleaseName('bar')
+    x = tagRegistryForReleaseName('bar')
     console.log("bar registry: %s", x);
 } catch (e) {
     console.log(e);

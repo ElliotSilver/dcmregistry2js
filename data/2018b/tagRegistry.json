@@ -2,7 +2,7 @@
         "metadata" : {
                 
         "release" : "2018b",
-        "generated" : "2021-02-16T05:04:09.395Z"
+        "generated" : "2021-02-22T22:17:16.332Z"
     },"tags" : [
 { "tag" : "00000000", "name" : "Command Group Length", "keyword" : "CommandGroupLength", "vr" : "UL", "vm" : "1", "retired" : false, "command" : true, "metainfo" : false, "realtime" : false, "dicomdir" : false, "dicos" : false, "diconde" : false },
 { "tag" : "00000001", "name" : "Command Length to End", "keyword" : "CommandLengthToEnd", "vr" : "UL", "vm" : "1", "retired" : true, "command" : true, "metainfo" : false, "realtime" : false, "dicomdir" : false, "dicos" : false, "diconde" : false },
